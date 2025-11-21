@@ -20,6 +20,14 @@ public class PacientesController {
     @FXML
     private TableColumn<Paciente, String> colId, colNombre, colEnfermedad;
 
+
+    @FXML
+    private TextField txtNombre;
+
+    @FXML
+    private TextField txtDni;
+
+
     @FXML
     public void initialize() {
 
@@ -38,6 +46,24 @@ public class PacientesController {
 
     @FXML
     public void agregarPaciente() {
+        // Aquí RECIBES los datos de los campos
+        String nombre = txtNombre.getText();
+        String id = txtDni.getText();
+
+        // Creas el objeto
+        Paciente nuevoPaciente = Pa(nombre, edad, dni);
+
+        // Lo guardas (en BD o lista)
+        // pacienteDAO.guardar(nuevoPaciente);
+
+        // Mostrar confirmación
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Éxito");
+        alert.setContentText("Paciente creado correctamente");
+        alert.showAndWait();
+
+        // Limpiar campos
+        limpiarCampos();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/parcialidadiii/views/modal_paciente.fxml"));
             Parent root = loader.load();
@@ -50,6 +76,11 @@ public class PacientesController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void limpiarCampos() {
+        txtNombre.clear();
+        txtDni.clear();
     }
 
     @FXML
