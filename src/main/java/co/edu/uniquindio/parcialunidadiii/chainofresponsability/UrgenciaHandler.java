@@ -13,7 +13,7 @@ public class UrgenciaHandler extends AsignacionHandler {
 
         if (paciente.getEnfermedad().getGravedadEnfermedad() == TipoEnfermedad.URGENTE) {
 
-            // Buscar médicos especialistas críticos
+
             for (Medico m : Clinica.getInstancia().getMedicos()) {
                 if (m.getEspecialidad() == TipoEspecialidad.CARDIOLOGO ||
                         m.getEspecialidad() == TipoEspecialidad.NEUROLOGO) {
@@ -24,7 +24,7 @@ public class UrgenciaHandler extends AsignacionHandler {
             }
         }
 
-        // Dejar que otro handler lo intente
+
         if (next != null) return next.handle(paciente);
 
         return null;

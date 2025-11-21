@@ -3,6 +3,7 @@ package co.edu.uniquindio.parcialunidadiii.app;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+
 import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
@@ -14,8 +15,15 @@ public class HelloApplication extends Application {
         ));
 
         Scene scene = new Scene(loader.load(), 900, 600);
+
+
         stage.setScene(scene);
-        stage.setTitle("Clínica UQ");
+        stage.setTitle("Sistema de Gestión Clínica UQ");
+        stage.setMinWidth(800);
+        stage.setMinHeight(500);
+
+
+
         stage.show();
     }
 

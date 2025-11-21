@@ -21,6 +21,8 @@ public class ModalCitaController {
     @FXML private DatePicker datePicker;
     @FXML private TextField txtHora;
     @FXML private TextField txtPrecio;
+    @FXML private Button btnCrear;
+    @FXML private Button btnCancelar;
 
     private ClinicaFacade facade = ClinicaFacade.getInstance();
 
@@ -28,7 +30,6 @@ public class ModalCitaController {
     public void initialize() {
         List<Paciente> pacientes = facade.obtenerPacientesFacade();
         List<Medico> medicos = facade.obtenerMedicosFacade();
-
         cmbPaciente.getItems().setAll(pacientes);
         cmbMedico.getItems().setAll(medicos);
 
@@ -53,7 +54,7 @@ public class ModalCitaController {
         String precioStr = txtPrecio.getText().trim();
 
         if (p == null || m == null || idConsultorio.isEmpty() || fecha == null || horaStr.isEmpty() || precioStr.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Datos faltantes", "Complete todos los campos.");
+            mostrarError("Datos faltantes", "Complete todos los campos.");
             return;
         }
 
@@ -61,7 +62,7 @@ public class ModalCitaController {
         try {
             lt = LocalTime.parse(horaStr);
         } catch (Exception ex) {
-            showAlert(Alert.AlertType.ERROR, "Hora inválida", "Use formato HH:mm, por ejemplo 14:30");
+            mostrarError("Hora inválida", "Use formato HH:mm (ej. 14:30)");
             return;
         }
 
@@ -69,38 +70,25 @@ public class ModalCitaController {
         try {
             precio = Double.parseDouble(precioStr);
         } catch (NumberFormatException ex) {
-            showAlert(Alert.AlertType.ERROR, "Precio inválido", "Ingrese un número válido para el precio.");
+            mostrarError("Precio inválido", "Ingrese un número válido.");
             return;
         }
 
         LocalDateTime hora = LocalDateTime.of(fecha, lt);
         Consultorio consultorio = new Consultorio(idConsultorio, m);
 
-        // Llamamos al facade: ajustar si tu firma es diferente
         try {
             facade.crearCitaFacade(p, consultorio, fecha, hora, precio);
             closeWindow();
         } catch (Exception ex) {
             ex.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "No se pudo crear la cita: " + ex.getMessage());
+            mostrarError("Error", "No se pudo crear la cita: " + ex.getMessage());
         }
     }
 
-    @FXML
-    public void onCancelar() {
-        closeWindow();
-    }
+    @FXML public void onCancelar() { closeWindow(); }
 
-    private void closeWindow() {
-        Stage st = (Stage) txtPrecio.getScene().getWindow();
-        st.close();
-    }
+    private void closeWindow() { Stage st = (Stage) btnCancelar.getScene().getWindow(); st.close(); }
 
-    private void showAlert(Alert.AlertType t, String title, String msg) {
-        Alert a = new Alert(t);
-        a.setTitle(title);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
-    }
+    private void mostrarError(String t, String m) { Alert a = new Alert(Alert.AlertType.ERROR); a.setTitle(t); a.setHeaderText(null); a.setContentText(m); a.showAndWait(); }
 }

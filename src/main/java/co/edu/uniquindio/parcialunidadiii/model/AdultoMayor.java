@@ -1,7 +1,7 @@
 package co.edu.uniquindio.parcialunidadiii.model;
 
 public class AdultoMayor extends Paciente {
-    private boolean jubilacion;
+    public boolean jubilacion;
 
     public AdultoMayor(Builder builder){
         super(builder);
@@ -11,12 +11,15 @@ public class AdultoMayor extends Paciente {
     //Builder
     public static class Builder extends Paciente.Builder<Builder> {
 
-        private boolean jubilacion;
+        public boolean jubilacion;
 
         public Builder setJubilacion(boolean jubilacion) {
             this.jubilacion = jubilacion;
             return this;
         }
+
+        public boolean isJubilacion() { return jubilacion; }
+
 
         @Override
         protected Builder self() {

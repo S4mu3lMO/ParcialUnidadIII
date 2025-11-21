@@ -1,31 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.*?>
 
-<GridPane xmlns="http://javafx.com/javafx/17"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="co.edu.uniquindio.parcialunidadiii.controller.ModalCitaController"
-          hgap="10" vgap="10" style="-fx-padding: 20;">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="co.edu.uniquindio.parcialunidadiii.controller.ModalCitaController"
+      spacing="15" style="-fx-padding: 25; -fx-background-color: white;"
+      prefWidth="500" prefHeight="500">
 
-    <Label text="Paciente:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <ComboBox fx:id="cmbPaciente" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="250"/>
 
-    <Label text="Médico:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <ComboBox fx:id="cmbMedico" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="250"/>
+    <HBox alignment="CENTER" style="-fx-background-color: #e74c3c; -fx-padding: 15; -fx-background-radius: 5;">
+        <Label text="Crear Nueva Cita" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+    </HBox>
 
-    <Label text="Consultorio ID:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <TextField fx:id="txtConsultorioId" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <Separator/>
 
-    <Label text="Fecha:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-    <DatePicker fx:id="datePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-    <Label text="Hora (HH:mm):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-    <TextField fx:id="txtHora" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    <GridPane hgap="15" vgap="18" VBox.vgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints minWidth="130" prefWidth="130"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
 
-    <Label text="Precio:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-    <TextField fx:id="txtPrecio" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-    <Button text="Crear" onAction="#onCrear" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-    <Button text="Cancelar" onAction="#onCancelar" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-</GridPane>
+        <Label text="Paciente:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <ComboBox fx:id="cmbPaciente" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                  promptText="Seleccione un paciente" maxWidth="Infinity"
+                  style="-fx-font-size: 13px;"/>
+
+
+        <Label text="Médico:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <ComboBox fx:id="cmbMedico" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                  promptText="Seleccione un médico" maxWidth="Infinity"
+                  style="-fx-font-size: 13px;"/>
+
+
+        <Label text="ID Consultorio:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <TextField fx:id="txtConsultorioId" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                   promptText="Ej: CONS-101"
+                   style="-fx-font-size: 13px;"/>
+
+
+        <Separator GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+        <Label text="Fecha y Hora" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2"
+               style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+
+        <Label text="Fecha:" GridPane.rowIndex="5" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <DatePicker fx:id="datePicker" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                    promptText="Seleccione fecha" maxWidth="Infinity"
+                    style="-fx-font-size: 13px;"/>
+
+
+        <Label text="Hora:" GridPane.rowIndex="6" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <TextField fx:id="txtHora" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                   promptText="HH:mm (Ej: 14:30)"
+                   style="-fx-font-size: 13px;"/>
+
+
+        <Separator GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+
+        <Label text="Precio:" GridPane.rowIndex="8" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <HBox GridPane.rowIndex="8" GridPane.columnIndex="1" spacing="5" alignment="CENTER_LEFT">
+            <Label text="S" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtPrecio" promptText="0.00" HBox.hgrow="ALWAYS"
+                       style="-fx-font-size: 13px;"/>
+        </HBox>
+    </GridPane>
+
+
+    <Separator/>
+
+    <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10 0 0 0;">
+        <Button fx:id="btnCrear" text="✅ Crear Cita" onAction="#onCrear"
+                prefWidth="140" prefHeight="35"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;">
+            <cursor>
+                <javafx.scene.Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+
+        <Button fx:id="btnCancelar" text="❌ Cancelar" onAction="#onCancelar"
+                prefWidth="140" prefHeight="35"
+                style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;">
+            <cursor>
+                <javafx.scene.Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+    </HBox>
+
+</VBox>

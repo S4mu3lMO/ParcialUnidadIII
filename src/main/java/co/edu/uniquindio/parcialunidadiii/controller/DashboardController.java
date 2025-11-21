@@ -11,7 +11,7 @@ public class DashboardController {
     private void cargarVista(String ruta) {
         try {
             Node vista = FXMLLoader.load(getClass().getResource("/co/edu/uniquindio/parcialunidadiii/views/" + ruta));
-            contentPane.getChildren().setAll(vista); // SIN CAST
+            contentPane.getChildren().setAll(vista);
         } catch (Exception e) {
             e.printStackTrace();
         }

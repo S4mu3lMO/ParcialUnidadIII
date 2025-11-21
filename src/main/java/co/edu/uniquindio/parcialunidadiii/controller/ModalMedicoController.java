@@ -7,29 +7,28 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
-
 public class ModalMedicoController {
 
     @FXML private TextField txtId;
     @FXML private TextField txtNombre;
     @FXML private ComboBox<TipoEspecialidad> cmbEspecialidad;
+    @FXML private Button btnGuardar;
+    @FXML private Button btnCancelar;
 
-    private Medico editar = null;
     private ClinicaFacade facade = ClinicaFacade.getInstance();
+    private Medico medicoEditar = null;
 
     @FXML
     public void initialize() {
-        cmbEspecialidad.getItems().setAll(Arrays.asList(TipoEspecialidad.values()));
+        cmbEspecialidad.getItems().setAll(TipoEspecialidad.values());
     }
 
     public void setMedicoParaEditar(Medico m) {
-        this.editar = m;
-        if (m != null) {
-            txtId.setText(m.getIdMedico());
-            txtNombre.setText(m.getNombre());
-            cmbEspecialidad.setValue(m.getEspecialidad());
-        }
+        this.medicoEditar = m;
+        if (m == null) return;
+        txtId.setText(m.getIdMedico());
+        txtNombre.setText(m.getNombre());
+        cmbEspecialidad.setValue(m.getEspecialidad());
     }
 
     @FXML
@@ -39,7 +38,7 @@ public class ModalMedicoController {
         TipoEspecialidad esp = cmbEspecialidad.getValue();
 
         if (id.isEmpty() || nombre.isEmpty() || esp == null) {
-            showAlert(Alert.AlertType.ERROR, "Datos incompletos", "Complete todos los campos.");
+            mostrarError("Datos incompletos", "Complete todos los campos.");
             return;
         }
 
@@ -49,8 +48,8 @@ public class ModalMedicoController {
                 .setEspecialidad(esp)
                 .build();
 
-        if (editar != null) {
-            facade.actualizarMedicoFacade(editar.getIdMedico(), m);
+        if (medicoEditar != null) {
+            facade.actualizarMedicoFacade(medicoEditar.getIdMedico(), m);
         } else {
             facade.registrarMedicoFacade(m);
         }
@@ -58,21 +57,14 @@ public class ModalMedicoController {
         closeWindow();
     }
 
-    @FXML
-    public void onCancelar() {
-        closeWindow();
-    }
+    @FXML public void onCancelar() { closeWindow(); }
 
     private void closeWindow() {
-        Stage st = (Stage) txtNombre.getScene().getWindow();
+        Stage st = (Stage) btnCancelar.getScene().getWindow();
         st.close();
     }
 
-    private void showAlert(Alert.AlertType t, String title, String msg) {
-        Alert a = new Alert(t);
-        a.setTitle(title);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+    private void mostrarError(String title, String msg) {
+        Alert a = new Alert(Alert.AlertType.ERROR); a.setTitle(title); a.setHeaderText(null); a.setContentText(msg); a.showAndWait();
     }
 }

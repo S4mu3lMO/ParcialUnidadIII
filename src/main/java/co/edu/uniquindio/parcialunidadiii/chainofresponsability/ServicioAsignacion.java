@@ -9,7 +9,7 @@ public class ServicioAsignacion {
 
     public ServicioAsignacion() {
 
-        // Construcción de la cadena
+
         chain = new UrgenciaHandler();
         chain.setNext(new EsperaHandler())
                 .setNext(new LeveHandler());
